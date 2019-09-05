@@ -1,0 +1,17 @@
+.vs/
+x64/
+Debug/
+Release/
+
+# Compilation output
+*.o
+*.a
+*.obj
+*.iobj
+*.so
+*.dylib
+*.ipdb
+*.pdb
+*.ilk
+*.exe
+

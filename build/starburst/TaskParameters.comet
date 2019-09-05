@@ -1,0 +1,11 @@
+properties:
+- name: CannyLow
+  type: integer
+- name: CannyHigh
+  type: integer
+- name: MinLineLength
+  type: decimal
+- name: MaxLineGap
+  type: decimal
+- name: ThresholdHough
+  type: integer

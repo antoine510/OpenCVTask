@@ -1,0 +1,5 @@
+properties:
+- name: LineCount
+  type: integer
+- name: Lines
+  type: buffer
