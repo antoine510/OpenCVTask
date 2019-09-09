@@ -1,5 +1,5 @@
 title: OpenCV Client
-version: "1.0"
+version: "1.0.0"
 description: This component is used to produce h264 comets
 iconImage: starburst/Icons/OCVicon.png
 backgroundImage: ""

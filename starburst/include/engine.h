@@ -27,7 +27,7 @@ SATLIB_API int SatLib_Engine_IsLocalRunning();
 SATLIB_API int SatLib_Engine_JoinSession(const char* sessionID, const char* address);
 SATLIB_API int SatLib_Engine_LeaveSession();
 
-SATLIB_API int SatLib_Component_Setup(const char* path, CActionCallback acb, void* actionData, IGC_Component* comp);
+SATLIB_API int SatLib_Component_Setup(const char* path, CActionCallback acb, void* actionData, IGC_Component_Future* compFuture);
 SATLIB_API int SatLib_Component_ReportState(const char* id, SatLib_Component_State newState);
 SATLIB_API int SatLib_Component_GetSessionPairing(const char* id, IGC_Pairing* pairing);
 

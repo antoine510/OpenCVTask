@@ -216,8 +216,13 @@ int main() {
 
 	auto startFuture = startPromise.get_future();
 	auto stopFuture = stopPromise.get_future();
+
 	IGC_Component ocvTaskCo;
-	SatLib_Component_Setup("starburst/OCVTask", actionCB, nullptr, &ocvTaskCo);
+	IGC_Component_Future ocvTaskCoFuture;
+	SatLib_Component_Setup("starburst/OCVTask", actionCB, nullptr, &ocvTaskCoFuture);
+	IGC_Component_GetByFields(ocvTaskCoFuture.name, ocvTaskCoFuture.version, &ocvTaskCo);
+	SatLib_Free(ocvTaskCoFuture.name);
+	SatLib_Free(ocvTaskCoFuture.version);
 
 	IGC_Session session;
 	while(IGC_Session_FindForSat(self.id, &session) > 0) {

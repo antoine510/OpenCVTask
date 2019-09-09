@@ -111,6 +111,11 @@ typedef struct IGC_Component {
 	uint32_t paramCount;
 } IGC_Component;
 
+typedef struct IGC_Component_Future {
+	char* name;
+	char* version;
+} IGC_Component_Future;
+
 typedef struct IGC_Session {
 	char* id;
 	char* templateID;
