@@ -224,9 +224,11 @@ int main() {
 
 	auto startFuture = startPromise.get_future();
 	auto stopFuture = stopPromise.get_future();
-	IGC_Component ocvClientCo;
 
-	assert(SatLib_Component_Setup("starburst/OCVClient", actionCB, nullptr, &ocvClientCo) == 0);
+	IGC_Component ocvClientCo;
+	IGC_Component_Future ocvClientCoFuture;
+	assert(SatLib_Component_Setup("starburst/OCVClient", actionCB, nullptr, &ocvClientCoFuture) == 0);
+	IGC_Component_GetByFields(ocvClientCoFuture.name, ocvClientCoFuture.version, &ocvClientCo);
 
 	IGC_Session session = createSession(self.id);
 	assert(SatLib_Engine_JoinSession(session.id, session.engineAddress) == 0);

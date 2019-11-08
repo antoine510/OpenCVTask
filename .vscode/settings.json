@@ -1,0 +1,7 @@
+{
+    "C_Cpp.default.cppStandard": "c++17",
+    "cmake.preferredGenerators": [
+        "Visual Studio 16 2019"
+    ],
+    "files.eol": "\n"
+}

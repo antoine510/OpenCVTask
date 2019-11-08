@@ -76,9 +76,6 @@ void DestroyDecoder() {
 	}
 }
 
-struct {
-	int width, height;
-} frameParams;
 sbcTopicID tptid, itid;
 
 struct {
@@ -108,7 +105,7 @@ void processFrame() {
 		return;
 	}
 
-	cv::Mat input(frameParams.height, frameParams.width, CV_8UC1, outFrames[0]);
+	cv::Mat input(decoder->GetHeight(), decoder->GetWidth(), CV_8UC1, outFrames[0]);
 
 	cv::Mat lines;
 	cv::Mat edges(input.rows, input.cols, CV_8UC1);
@@ -129,7 +126,7 @@ void processFrame() {
 
 	SatLib_Nebula_SendComet("outLines", outLinesComet);
 
-	cv::Mat lineImage(input.rows, input.cols, CV_8UC1);
+	/*cv::Mat lineImage(input.rows, input.cols, CV_8UC1);
 	memset(lineImage.data, 0, lineImage.dataend - lineImage.datastart);
 	for(int i = 0; i < lines.rows; ++i) {
 		cv::line(lineImage, cv::Point(lines.at<int>(i, 0), lines.at<int>(i, 1)), cv::Point(lines.at<int>(i, 2), lines.at<int>(i, 3)), cv::Scalar(255), 1);
@@ -138,7 +135,7 @@ void processFrame() {
 	cv::addWeighted(input, 0.8, lineImage, 1, 0, result);
 
 	cv::imshow("Result", result);
-	cv::waitKey(0);
+	cv::waitKey(0);*/
 }
 
 std::mutex frameMutex;
@@ -221,16 +218,15 @@ int main() {
 	IGC_Component_Future ocvTaskCoFuture;
 	SatLib_Component_Setup("starburst/OCVTask", actionCB, nullptr, &ocvTaskCoFuture);
 	IGC_Component_GetByFields(ocvTaskCoFuture.name, ocvTaskCoFuture.version, &ocvTaskCo);
-	SatLib_Free(ocvTaskCoFuture.name);
-	SatLib_Free(ocvTaskCoFuture.version);
 
 	IGC_Session session;
-	while(IGC_Session_FindForSat(self.id, &session) > 0) {
+	while(int result = IGC_Session_FindForSat(self.id, &session) > 0) {
+		assert(result >= 0);
 		std::this_thread::sleep_for(1s);
 	}
 	assert(SatLib_Engine_JoinSession(session.id, session.engineAddress) == 0);
 
-	IGC_Pairing ocvTaskSp;
+	IGC_Pairing ocvTaskSp{0};
 	assert(SatLib_Component_GetSessionPairing(ocvTaskCo.id, &ocvTaskSp) == 0);
 
 	std::unordered_map<std::string, IGC_Component_ParamValue> parameters;
@@ -251,9 +247,6 @@ int main() {
 	InitializeDecoder();
 
 	SatLib_Component_ReportState(ocvTaskCo.id, SATLIB_COMPONENT_STARTED);
-
-	frameParams.width = (int)parameters.at("CaptureWidth").valueUnion.int_;
-	frameParams.height = (int)parameters.at("CaptureHeight").valueUnion.int_;
 
 	/* Starting moonvdec */
 	/*assert(mvd_Init(logCB) == 0);
