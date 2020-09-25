@@ -1,0 +1,22 @@
+title: OpenCV Task
+version: "1.0.0"
+description: This component is used to detect lines in an image
+iconImage: starburst/Icons/OCVicon.png
+backgroundImage: starburst/Icons/ocvBanner.png
+topics:
+- name: ocvTaskLinesParams
+  comet: OCVTaskLinesParams
+  in: true
+- name: videoFrame
+  comet: VideoFrame
+  in: true
+- name: frameSlotReady
+  comet: FrameSlotReady
+  out: true
+- name: lines
+  comet: Lines
+  out: true
+paramSpecs:
+- name: ThreadCount
+  description: The number of task threads, 0 for max on hardware
+  int: {min: 0, max: 64}

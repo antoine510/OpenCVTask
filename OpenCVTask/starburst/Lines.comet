@@ -1,0 +1,9 @@
+properties:
+- name: SrfWidth
+  type: integer
+- name: SrfHeight
+  type: integer
+- name: LineCount
+  type: integer
+- name: Lines
+  type: buffer
